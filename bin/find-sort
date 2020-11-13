@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ $# -eq 0 ]; then
+  find . -printf "%T+ %s %p\n" | sort
+else
+  find "$@" -printf "%T+ %s %p\n" | sort
+fi

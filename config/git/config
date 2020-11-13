@@ -1,0 +1,59 @@
+; vim: set ft=dosini:
+[core]
+	pager = ''
+[user]
+;	name = 
+;	email = 
+
+[alias]
+	branches = branch -a
+	ci = commit
+	co = checkout
+	st = status
+	h = help
+	sm = submodule
+	lgn =	log --name-status
+	ahead = log @{u}..
+	behind = log ..@{u}
+	dff = diff
+	dif = diff
+	idff = diff
+	cdiff = diff --cached
+	cdif = diff --cached
+        history = log
+        hist = log
+	pul = pull
+	pulll = pull
+	pus = push
+
+;[http]
+;	sslCAinfo = /home/cflowe/.certs/cacert.pem
+;	sslVerify = false
+
+[core]
+;	gitproxy=default-proxy
+
+[push]
+	default = simple
+
+[diff]
+;	tool = meld
+        submodule = log
+
+[status]
+	submodulesummary = 1
+
+[url "https://bitbucket.com/"]
+	insteadOf = bbh:
+
+[url "git@bitbucket.org:"]
+	insteadOf = bbg:
+
+[url "https://github.com/"]
+	insteadOf = gh:
+
+[url "https://gist.github.com/"]
+	insteadOf = gist:
+
+[tar "tar.xz"]
+	command = xz -c

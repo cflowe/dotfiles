@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+tr -dc a-z1-4 </dev/urandom \
+  | tr 12 '\n' \
+  | tr 34 ' ' \
+  | cat -s \
+  | sed -re 's/^ *//; s/ +/ /g' \
+  | stdbuf -o0 fmt
+

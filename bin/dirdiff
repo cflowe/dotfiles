@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+function main {
+  declare first_file=${1:?file 1 is missing}; shift
+  declare second_file=${1:?second 1 is missing}; shift
+
+  diff \
+    '--exclude=*.log' \
+    '--exclude=.git' \
+    '--exclude=.gradle' \
+    '--exclude=.idea' \
+    '--exclude=build' \
+    '--exclude=misc' \
+    '--exclude=test' \
+    "$@" \
+    "$first_file" \
+    "$second_file"
+}
+
+main "$@"

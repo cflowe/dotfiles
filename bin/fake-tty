@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# usage: fake-tty <command> [[arg1]...argN]
+#
+# This will run <command> with a tty even if stdout is not a tty.
+#
+
+set -eu -o pipefail
+
+socat - EXEC:"'""$*""'",pty,setsid,ctty

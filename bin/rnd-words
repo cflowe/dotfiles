@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Usage: rnd-words [[number-of-words] [delimeter]
+#
+# [number-of-words] The number of words to include in the passpharse
+#                   Default: 5
+#
+# [delimeter]       The delimiter to use between words
+#                   Default: Empty string
+#
+# [words-file]      A file of words one per line
+#                   Default: /usr/share/dict/words
+#
+# A modified version of:
+#
+# https://codereview.stackexchange.com/questions/178031/passphrase-generator-script
+#
+set -eu -o pipefail
+
+function main {
+  #set +u # this is needed if a non-numeric value is passed as the first arg
+  declare count="${1:-5}"; shift || :
+  #set -u
+
+  declare delimiter=${1:-}; shift || :
+
+  declare words=${1:-/usr/share/dict/words}; shift || :
+  declare random lines
+
+  lines=$(wc -l < "$words")
+
+  # https://serverfault.com/a/214620/216850
+  # 
+  # sudo rngd -r /dev/urandom
+
+  # print $n randomly chosen words from $words file
+  {
+  while read -rt 5; do
+    echo "${REPLY^}"
+  done < <(
+    for ((i=0; i < count; i++)); do
+      # https://unix.stackexchange.com/a/268960
+      random=$(od -vAn -N4 -tu4 < /dev/urandom)
+
+      awk "NR==$((random % lines))" "$words"
+    done
+    )
+  } | paste -s -d "$delimiter"
+}
+
+main "$@"

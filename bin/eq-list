@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+equery l -po -F '[$location] [$mask] [$repo] $cpv:$slot [$mask2]' "$@"

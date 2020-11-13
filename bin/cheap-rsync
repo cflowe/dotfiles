@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+# aes128-cbc was consistently faster in the test environment
+# see ssh-speed-test
+#rsync --partial --inplace -e 'ssh -c aes128-cbc -o Compression=no -x' "$@"
+
+# when aes128-cbc is not available, trye aes128-gcm@openssh.com
+#
+# aes256-gcm@openssh.com is 2 seconds faster than aes128-cbc in the speed test
+rsync --partial --inplace -e 'ssh -c 'aes128-gcm@openssh.com' -o Compression=no -x' "$@"

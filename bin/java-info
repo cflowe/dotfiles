@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+java \
+  -XX:+AggressiveOpts \
+  -XX:+UnlockExperimentalVMOptions \
+  -XX:+UnlockDiagnosticVMOptions \
+  -XX:+PrintFlagsFinal \
+  -version 2>&1

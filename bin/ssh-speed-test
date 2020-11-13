@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+test_host=${1:?No test ssh hostname provided}
+
+#pv=$(type -p pv || cat)
+
+function main {
+  # shellcheck disable=SC2033
+  comm -12 \
+      <(ssh -Q cipher | sort) \
+      <(ssh "$test_host" -- ssh -Q cipher 2>/dev/null | sort) \
+    | xargs -ri \
+      bash -c "ssh_cipher_speed_test '$test_host' '{}'" \
+        ssh_cipher_speed_test
+
+}
+
+# shellcheck disable=SC2032
+function ssh_cipher_speed_test {
+  # Destination is either:
+  #   [user@]hostname
+  #   ssh://[user@]hostname[:port]
+  declare destination=${1:?No host or destination given}; shift
+  declare cipher=${1:?No ssh cipher given}
+
+  echo -n "${cipher}: "
+
+  # stdbuf -o0 dd if=/dev/zero bs=1M count=10 2>/dev/null \
+  #   | stdbuf -o0 -i0 ssh -c {} -o Compression=no \
+  #     -o FingerprintHash=sha256 "'$destination'" "(time -p cat) 2>&1 >/dev/null" | grep real || :'
+
+  stdbuf -o0 dd if=/dev/zero bs=1M count=10 2>/dev/null \
+    | stdbuf -o0 -i0 ssh -c "$cipher" -o Compression=no "$destination" \
+      '(stdbuf -o0 bash -c "time -p cat") 2>&1 >/dev/null' \
+      2>/dev/null \
+    | grep real || echo '<NOT-SUPPORTED>'
+}
+
+declare -fx ssh_cipher_speed_test
+
+main "$@"

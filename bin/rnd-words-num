@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+#
+# Usage: rnd-words [[number-of-words] [[delimeter] [words-file]]]
+#
+# [number-of-words] The number of words to include in the passphrase
+#                   Default: 5
+#
+# [delimeter]       The delimiter to use between words
+#                   Default: Random punctuation
+#
+# [words-file]      A file of words to use one per line
+#                   Default: /usr/share/dict/words
+#
+# A modified version of:
+#
+# https://codereview.stackexchange.com/questions/178031/passphrase-generator-script
+#
+set -eu -o pipefail
+
+function main {
+  DEFAULT_WORD_FILE=/usr/share/dict/words
+
+  #set +u # this is needed if a non-numeric value is passed as the first arg
+  declare count="${1:-5}"; shift || :
+  #set -u
+
+  declare delimiter=${1:-}; shift || :
+
+  declare words=${1:-"$DEFAULT_WORD_FILE"}; shift || :
+  declare random lines
+
+  #lines=$(wc -l < "$words")
+  lines=$(get_word_count "$words")
+
+  if [ -z "$delimiter" ]; then
+    delimiter=$(sort -R <<<$'!\n@\n#\n$\n%\n^\n&\n*\n(\n)\n_\n+\n-\n=\n{\n}\n[\n]\n|\n\\\\\n,\n.\n/\n<\n>\n?\n;\n:\n"\n'"'" | tr -d '\n')
+  fi
+
+  # https://serverfault.com/a/214620/216850
+  # 
+  # sudo rngd -r /dev/urandom
+
+  # print $n randomly chosen words from $words file
+  {
+    while read -rt 5; do
+      # echo "${REPLY}"
+      # echo "${REPLY^}"
+      random_cap "$REPLY"
+    done < <(
+      for ((i=0; i < count; i++)); do
+        # https://unix.stackexchange.com/a/268960
+        random=$(od -vAn -N4 -tu4 < /dev/urandom)
+
+        awk "NR==$((random % lines))" <<<"$(get_words "$words")"
+      done
+      )
+    od -vAn -N2 -tu2 < /dev/urandom | sed -re 's/^\s+(\S+(\s+\S+)*)\s*$/\1/'
+  } | paste -s -d "$delimiter"
+}
+
+function get_word_count {
+  declare words=${1:-"$DEFAULT_WORD_FILE"}; shift || :
+  declare -i min_word_length=3
+  declare -i max_word_length=7
+
+  awk "length >= $min_word_length && length <= $max_word_length" "$words" \
+    | wc -l
+}
+
+function get_words {
+  declare words=${1:-"$DEFAULT_WORD_FILE"}; shift || :
+  declare -i min_word_length=3
+  declare -i max_word_length=7
+
+  awk \
+    "length >= $min_word_length && length <= $max_word_length" \
+    "$words" | tr '[:upper:]' '[:lower:]'
+}
+
+function random_cap {
+  declare word=${1:?No word was given to random_cap}
+  declare -i word_len="${#word}"
+  declare -i i
+  declare flipped=
+  declare tmp
+  declare -i random
+
+  for ((i=0; i<"$word_len"; ++i))
+  do
+    tmp="${word:$i:1}"
+
+    if [ -n "$flipped" ]; then
+      echo -n "$tmp"
+    else
+      # random=$(tr -dc '1-4' </dev/urandom | dd bs=1 count=1 2>/dev/null || :)
+
+      case "$tmp" in
+      [A-Z])
+        if [ $((RANDOM % 16384)) -gt 8192 ]; then
+        # if [ "$random" -lt 3 ]; then
+          echo -n "$tmp"
+        else
+          flipped=1
+          echo -n "${tmp,}"
+        fi
+
+        ;;
+      [a-z])
+        if [ $((RANDOM % 16384)) -gt 8192 ]; then
+        # if [ "$random" -lt 3 ]; then
+          echo -n "$tmp"
+        else
+          flipped=1
+          echo -n "${tmp^}"
+        fi
+
+        ;;
+      *)
+        echo -n "$tmp"
+      esac
+    fi
+  done
+
+  echo
+}
+
+main "$@"

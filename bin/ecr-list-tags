@@ -1,0 +1,14 @@
+#!/usr/env/bin bash
+
+set -eu -o pipefail
+
+function main {
+  local repo=${1:?No repository name given}
+
+  aws ecr describe-images --repository-name "$repo" \
+    --query 'imageDetails[].imageTags[]' --output text \
+      | tr '[[:space:]]' '\n' \
+      | sort -V
+}
+
+main "$@"
