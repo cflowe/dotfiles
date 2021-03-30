@@ -52,6 +52,9 @@
 [url "https://github.com/"]
 	insteadOf = gh:
 
+[url "git@github.com"]
+	insteadOf = gg:
+
 [url "https://gist.github.com/"]
 	insteadOf = gist:
 
