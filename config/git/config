@@ -12,7 +12,7 @@
 	st = status
 	h = help
 	sm = submodule
-	lgn =	log --name-status
+	lgn = log --name-status
 	ahead = log @{u}..
 	behind = log ..@{u}
 	dff = diff
@@ -27,7 +27,7 @@
 	pus = push
 
 ;[http]
-;	sslCAinfo = /home/cflowe/.certs/cacert.pem
+;	sslCAinfo = /home/<USER>/.certs/cacert.pem
 ;	sslVerify = false
 
 [core]
