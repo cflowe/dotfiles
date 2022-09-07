@@ -3,7 +3,7 @@
 set -eu -o pipefail
 
 cloud-init clean
-/binrm -f /var/log/cloud*
+/bin/rm -f /var/log/cloud*
 cloud-init init --local
 cloud-init init
 cloud-init modules --mode=config

@@ -1,0 +1,13 @@
+# Look for 'source'd files relative to the current working directory where the
+# shellcheck command is invoked.
+#
+# https://www.shellcheck.net/wiki/Directive#source-path
+source-path=SCRIPTDIR
+
+# Allow opening any 'source'd file, even if not specified as input
+#
+# https://www.shellcheck.net/wiki/Directive#external-sources
+external-sources=true
+
+disable=SC1090
+# disable=SCXXXX

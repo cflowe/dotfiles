@@ -10,7 +10,7 @@ function main {
   # shellcheck disable=SC2033
   comm -12 \
       <(ssh -Q cipher | sort) \
-      <(ssh "$test_host" -- ssh -Q cipher 2>/dev/null | sort) \
+      <(ssh "$test_host" -- stdbuf -o0 ssh -Q cipher 2>/dev/null | sort) \
     | xargs -ri \
       bash -c "ssh_cipher_speed_test '$test_host' '{}'" \
         ssh_cipher_speed_test
@@ -26,10 +26,6 @@ function ssh_cipher_speed_test {
   declare cipher=${1:?No ssh cipher given}
 
   echo -n "${cipher}: "
-
-  # stdbuf -o0 dd if=/dev/zero bs=1M count=10 2>/dev/null \
-  #   | stdbuf -o0 -i0 ssh -c {} -o Compression=no \
-  #     -o FingerprintHash=sha256 "'$destination'" "(time -p cat) 2>&1 >/dev/null" | grep real || :'
 
   stdbuf -o0 dd if=/dev/zero bs=1M count=10 2>/dev/null \
     | stdbuf -o0 -i0 ssh -c "$cipher" -o Compression=no "$destination" \

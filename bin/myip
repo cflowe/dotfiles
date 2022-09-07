@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+
+curl -sSL -4 https://cloudflare.com/cdn-cgi/trace \
+  | awk -F= '/^ip=[0-9]/ {print $NF}'
