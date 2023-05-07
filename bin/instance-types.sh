@@ -69,7 +69,7 @@ function main {
     for az in "${all_az[@]}"; do
       echo "Checking availability zone $az ($cnt/$num_az)"$'\n' >&2
 
-      region=$(awk -F- '{num=$3; sub(/[^0-9]+$/, "", num); printf "%s-%s-%d\n", $1, $2, num}' <<<"$az")
+      region=$(sed -re 's/^([^-]+-[^-]+-[0-9]+).*$/\1/' <<<"$az")
 
       (
         set -x

@@ -1,0 +1,45 @@
+root = true
+
+[*]
+#charset = utf-8
+#end_of_line = lf
+#end_of_line = unset
+indent_style = space
+insert_final_newline = true
+tab_width = 2
+trim_trailing_whitespace = true
+
+[*.bats]
+indent_size = 2
+
+[*.{diff,patch}]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+[*.md]
+x-soft-wrap-text = true
+indent_size = 4
+
+[*.nix]
+indent_size = 2
+
+[*.py]
+#charset = utf-8
+indent_size = 4
+
+[*.sh]
+indent_size = 2
+
+[*.{hcl,tf,tfvars}]
+indent_size = 2
+
+[*.{yaml,yml}]
+#charset = utf-8
+indent_size = 2
+
+[Dockerfile{,.*}]
+tab_width = 2
+
+[{GNUmakefile,Makefile,makefile,*akefile*}]
+tab_width = 4
+indent_style = tab

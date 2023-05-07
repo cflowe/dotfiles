@@ -1,0 +1,4 @@
+override:
+  error:
+    - DL3006 # Always tag the version of an image explicitly.
+    - DL3007 # Don't use *:latest

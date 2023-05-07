@@ -1,5 +1,5 @@
 export GIT_EDITOR=/usr/bin/vim
-export GIT_PAGER='/usr/bin/less -inX'
+export GIT_PAGER='/usr/bin/less -inFRMX'
 #export GIT_CONFIG="${HOME}/.config/git/config"
 
 #GIT_ALLOC_LIMIT

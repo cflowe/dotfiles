@@ -1,70 +1,74 @@
 ; vim: set ft=dosini:
 [alias]
-	branches = branch -a
-	br = branch
-	ci = commit
-	co = checkout
-	st = status
-	h = help
-	sm = submodule
-	lgn = log --name-status
-	ahead = log @{u}..
-	behind = log ..@{u}
-	dff = diff
-	dif = diff
-	idff = diff
-	cdiff = diff --cached
-	cdif = diff --cached
-        history = log
-        hist = log
-	pul = pull
-	pulll = pull
-	puhs = push
-	pus = push
-	sw = switch
+  branches = branch -a
+  br = branch
+  brv = branch -v
+  ci = commit
+  co = checkout
+  st = status
+  h = help
+  sm = submodule
+  lgn = log --name-status
+  lgp = log -p
+  ahead = log @{u}..
+  behind = log ..@{u}
+  dff = diff
+  dif = diff
+  idff = diff
+  cdiff = diff --cached
+  cdif = diff --cached
+  hist = log
+  pul = pull
+  pulll = pull
+  puhs = push
+  pus = push
+  sw = switch
 
 [core]
-	pager = ''
-;	gitproxy=default-proxy
+  pager = ''
+;  gitproxy=default-proxy
 
 [diff]
-;	tool = meld
-        submodule = log
+;  tool = meld
+  submodule = log
 
-;[http]
-;	sslCAinfo = /home/<USER>/.certs/cacert.pem
+[filter "lfs"]
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
 
 [init]
-	defaultBranch = master
+  defaultBranch = master
 
 [pull]
-	rebase = false
-	ff = true
+  rebase = false
+  ff = true
 
 [push]
-	default = simple
+  default = simple
 
 [status]
-	submodulesummary = 1
-
-[url "https://bitbucket.com/"]
-	insteadOf = bbh:
-
-[url "git@bitbucket.org:"]
-	insteadOf = bbg:
-
-[url "https://github.com/"]
-	insteadOf = gh:
-
-[url "git@github.com"]
-	insteadOf = gg:
-
-[url "https://gist.github.com/"]
-	insteadOf = gist:
-
-[user]
-;	name = 
-;	email = 
+  submodulesummary = 1
 
 [tar "tar.xz"]
-	command = xz -c
+  command = xz -c
+
+[url "https://bitbucket.com/"]
+  insteadOf = bbh:
+
+[url "git@bitbucket.org:"]
+  insteadOf = bbg:
+
+[url "https://github.com/"]
+  insteadOf = gh:
+
+[url "git@github.com"]
+  insteadOf = gg:
+
+[url "https://gist.github.com/"]
+  insteadOf = gist:
+
+[user]
+;  name =
+;  email =
