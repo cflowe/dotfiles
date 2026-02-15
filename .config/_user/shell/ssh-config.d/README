@@ -1,0 +1,4 @@
+Add the following to the end of ~/.ssh/config:
+
+include ~/.config/_user/shell/ssh-config.d/*.conf
+include ~/.config/_user/shell/ssh-config.override

@@ -1,13 +1,13 @@
-; vim: set ft=dosini:
 [alias]
   branches = branch -a
-  br = branch
+  br = !git -P branch
   brv = branch -v
   ci = commit
+  cloen = clone
   co = checkout
-  st = status
   h = help
   sm = submodule
+  lg = log
   lgn = log --name-status
   lgp = log -p
   ahead = log @{u}..
@@ -22,6 +22,8 @@
   pulll = pull
   puhs = push
   pus = push
+  ref-sort-commit-time = "!fn(){ env TZ=UTC git for-each-ref --sort=committerdate --format=\"%(committerdate:iso-strict-local) %(refname:short) %(objectname:short)\" \"$@\" | column -t; }; fn \"$@\""
+  st = status
   sw = switch
 
 [core]
@@ -61,7 +63,7 @@
   insteadOf = bbg:
 
 [url "git@github.com:cflowe/"]
-	insteadOf = cf:
+  insteadOf = cf:
 
 [url "https://github.com/"]
   insteadOf = gh:
@@ -71,6 +73,9 @@
 
 [url "https://gist.github.com/"]
   insteadOf = gist:
+
+[tar "tar.xz"]
+  command = xz -c
 
 [user]
   email = 2170524+cflowe@users.noreply.github.com

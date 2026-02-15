@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "name":    "test-shell",
+  "packages": [
+  ],
+  "shell": {
+    "init_hook": [
+      "echo \"$(date -u -Iseconds): test-shell: Starting.\"",
+      "export _USER_DEVBOX_WORKSPACE=test",
+      "export _USER_DEVBOX_WORKSPACES_DIR=\"$PWD/workspace/${_USER_DEVBOX_WORKSPACE}\"",
+      "export _USER_PROFILE_BASE_DIR=\"$_USER_DEVBOX_WORKSPACES_DIR\"",
+      "source ../../devbox/scripts/start.sh"
+    ],
+    "scripts": {
+      "test": [
+        "true"
+      ]
+    }
+  },
+  "include": [
+    "../../devbox"
+  ]
+}

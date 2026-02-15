@@ -1,1 +1,10 @@
-test
+*
+!/.config
+!/.config/git
+!/.config/hadolint.yaml
+!/.config/_user
+!/.config/_user/**
+!/.config/vim
+!/.config/vim/**
+!/.editorconfig
+!/.gitignore
