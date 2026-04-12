@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # shellcheck disable=SC1090
-function _main {
+_main_init_profile() {
   declare profile_base_dir="${_USER_PROFILE_BASE_DIR:-"${XDG_CONFIG_HOME:-${HOME}/.config}/_user/shell"}"
 
   if [ "${_USER_CONFIG_DEBUG:-}" == 'true' ]; then
@@ -10,7 +10,15 @@ function _main {
 
   _source_script "${profile_base_dir}/profile.d/functions"
   _source_scripts_dir "${profile_base_dir}/profile.d"
+  _source_scripts_dir "${profile_base_dir}/contrib/profile.d"
   _source_script "${profile_base_dir}/profile.d/cleanup"
+}
+
+_main_prompt_command() {
+  declare profile_base_dir="${_USER_PROFILE_BASE_DIR:-"${XDG_CONFIG_HOME:-${HOME}/.config}/_user/shell"}"
+
+  _source_scripts_dir "${profile_base_dir}/prompt.d"
+  _source_scripts_dir "${profile_base_dir}/contrib/prompt.d"
 }
 
 # usage: _source_dir <directory> [[pattern] [operation]]
@@ -29,7 +37,7 @@ _source_dir() {
     declare file
     declare -a files=()
 
-    mapfile -t files < <(LC_COLLATE=C.UTF8 LC_CTYPE=C.UTF8 find -L "$source_dir" -maxdepth 1 -type f -name "$pattern" | sort -V)
+    mapfile -t files < <(find -L "$source_dir" -maxdepth 1 -type f -name "$pattern" | LC_COLLATE=C.UTF8 LC_CTYPE=C.UTF8 sort -V)
 
     if [ -n "$operation" ]; then
       for file in "${files[@]}"; do
@@ -59,8 +67,13 @@ _source_script() {
   fi
 }
 
-_main
-unset -f _main
+case "$0" in
+*/prompt-command.sh) _main_prompt_command "$@";;
+*) _main_init_profile "$@";;
+esac
+
+unset -f _main_init_profile
+unset -f _main_prompt_command
 unset -f _source_dir
 unset -f _source_script
 unset -f _source_scripts_dir

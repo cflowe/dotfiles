@@ -99,7 +99,7 @@ _cmd_git() {
 
 _cmd_install() {
   git_clone_wrapper "$repository" "$git_dir"
-  git_wrapper checkout -c advice.detachedHead=
+  git_wrapper -c advice.detachedHead= checkout
 }
 
 _cmd_update() {
