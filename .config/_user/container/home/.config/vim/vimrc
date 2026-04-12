@@ -1,0 +1,73 @@
+let g:EditorConfig_exclude_patterns = [
+  \ 'ftp://.*',
+  \ 'fugitive://.*',
+  \ 'git://.*',
+  \ 'https://.*',
+  \ 'http://.*',
+  \ 'man://.*',
+  \ 'scp://.*',
+  \ 'sftp://.*',
+  \ 'tarfile://.*',
+  \ 'term://.*',
+  \ 'zipfile://.*'
+\ ]
+
+if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
+   set fileencodings=utf-8
+endif
+
+set modeline
+set paste
+set title
+
+set nocompatible
+set bs=2
+set cc=80
+set ai
+set vb
+"set backup
+set viminfo='20,\"250   " read/write a .viminfo file, don't store more
+                        " than 250 lines of registers
+set history=100
+set ruler
+
+set sw=2
+set softtabstop=2
+set expandtab
+set nohls
+set uc=200
+
+"set t_Co=256
+set t_ti= t_te=
+"set termguicolors
+:colorscheme desert
+
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
+
+map <C-n> :NERDTreeToggle<CR>
+"autocmd vimenter * NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
+if has("autocmd")
+  autocmd BufRead *.txt set tw=78
+  " When editing a file, always jump to the last cursor position
+  autocmd BufReadPost *
+  \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+  \   exe "normal g'\"" |
+  \ endif
+endif
+
+hi IdlType ctermfg=darkyellow
+
+":setlocal spell spelllang=en
+
+filetype plugin indent on
+
+au BufRead,BufNewFile *.pp set filetype=puppet
+
+"let g:sh_noisk = 1
+
+" disabling highlighting
+let g:ale_set_highlights = 0

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+case "$-" in
+*i*)
+  _source_dir "${_USER_DEVBOX_WORKSPACE_DIR}/completion.d"
+  ;;
+esac

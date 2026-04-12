@@ -1,3 +1,0 @@
-Add the following to the end of ~/.ssh/config:
-
-  include <path-tp>/config/ssh-config.d/*.conf

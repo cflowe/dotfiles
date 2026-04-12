@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2154
+_fn() {
+  if [ "${_USER_CONFIG_DEBUG:-}" == 'true' ]; then
+    echo 'DEBUG: fini.'
+  fi
+
+  case "$-" in
+  *i*)
+    _source_scripts_dir "${profile_base_dir}/completion.d"
+
+    declare file
+
+    file="${profile_base_dir}/../utils/prompt-command.sh"
+    if [ -x "$file" ] && [ -r "$file" ]; then
+      export PROMPT_COMMAND="source $file"
+    fi
+    ;;
+  esac
+
+  set +x
+}
+
+_fn
+unset -f _fn

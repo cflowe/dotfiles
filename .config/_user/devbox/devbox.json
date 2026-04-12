@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "name":    "base-shell",
+  "packages": [
+    "direnv@latest",
+    "hadolint@latest",
+    "mise@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "echo \"$(date -u -Iseconds): base-shell: Starting.\""
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
+    }
+  },
+  "nixpkgs": {
+    "_comments": [
+      "This git hash was taken from",
+      "https://channels.nixos.org/nixos-25.05-small/git-revision",
+
+      ""
+    ],
+    "commit": "11cb3517b3af6af300dd6c055aeda73c9bf52c48"
+  }
+}
