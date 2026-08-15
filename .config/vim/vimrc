@@ -12,6 +12,34 @@ let g:EditorConfig_exclude_patterns = [
   \ 'zipfile://.*'
 \ ]
 
+call plug#begin()
+
+Plug 'cespare/vim-toml', { 'commit': 'da051b7' }
+Plug 'editorconfig/editorconfig-vim', { 'tag': 'v1.2.1' }
+Plug 'ekalinin/Dockerfile.vim', { 'commit': '2a31e6b' }
+Plug 'hashivim/vim-nomadproject', { 'commit': '15867b4' }
+Plug 'hashivim/vim-packer', { 'commit': 'c2561f4' }
+Plug 'hashivim/vim-terraform', { 'commit': '520498f' }
+Plug 'hashivim/vim-vaultproject', { 'tag': 'v1.1.0' }
+Plug 'itspriddle/vim-shellcheck', { 'tag': 'v1.2.0' }
+Plug 'towolf/vim-helm', { 'commit': '2c8525f' }
+Plug 'tpope/vim-sensible', { 'tag': 'v2.0' }
+Plug 'wbthomason/packer.nvim', { 'commit': 'ea0cc3c' }
+Plug 'yorinasub17/vim-terragrunt', { 'commit': '5579d86' }
+
+"Plug 'LnL7/vim-nix'
+"Plug 'aliou/bats.vim'
+"Plug 'b4b4r07/vim-hcl'
+"Plug 'fatih/vim-hclfmt'
+"Plug 'fzf
+"Plug 'mitsuhiko/vim-jinja'
+"Plug 'mustache/vim-mustache-handlebars'
+"Plug 'scrooloose/nerdtree'
+
+call plug#end()
+
+":PlugInstall
+
 if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
    set fileencodings=utf-8
 endif
@@ -29,11 +57,11 @@ set cc=80
 set ai
 set vb
 "set backup
-set viminfo='20,\"250   " read/write a .viminfo file, don't store more
-                        " than 250 lines of registers
+set viminfo='256,\"256,/64,n~/.local/state/viminfo/default
 set history=100
 set ruler
 set number
+"set relativenumber
 
 set sw=2
 set softtabstop=2
@@ -44,9 +72,11 @@ set uc=200
 ":setlocal spell spelllang=en
 "set t_Co=256
 set t_ti= t_te=
-"set termguicolors
+set termguicolors
 :colorscheme desert
 hi IdlType ctermfg=darkyellow
+syn on
+highlight StatusLine  guifg=#000000 guibg=#8844ff
 
 map <C-n> :NERDTreeToggle<CR>
 "autocmd vimenter * NERDTree
@@ -57,9 +87,17 @@ if has("autocmd")
   autocmd BufRead *.txt set tw=78
 endif
 
+" Return to last edit position when opening files
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   execute "normal! g`\"" |
+  \ endif
+
 "filetype plugin indent on
 
 "let g:sh_noisk = 1
 
 " disabling highlighting
 let g:ale_set_highlights = 0
+
+source ~/.config/vim/mappings.vim

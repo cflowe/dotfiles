@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+source "${_USER_CONFIG_DIR:?}/shared/profile.d/prompt-command.sh"
