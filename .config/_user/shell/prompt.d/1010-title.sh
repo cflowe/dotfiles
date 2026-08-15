@@ -1,1 +1,0 @@
-../../shared/prompt.d/title.sh

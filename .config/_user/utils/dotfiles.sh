@@ -8,11 +8,11 @@
 #   # default branch into $HOME.
 #   .config/_user/utils./dotfiles.sh install
 #
-#   # Same as above, but shows a dry run of the commands.
-#   .config/_user/utils./dotfiles.sh -n install
+#   # Same as above, but shows a dry run of the command.
+#   .config/_user/utils./dotfiles.sh -n true install
 #
-#   # Update dotfiles in <install-dir> using the default <repository>.
-#   <install-dir>/.config/_user/utils/dotfiles.sh update
+#   # Update dotfiles in ~ using the default <repository>.
+#   ~/.config/_user/utils/dotfiles.sh update
 #
 #   # Install dotfiles into the home directory of `test_user` using the
 #   # latest commit on HEAD in the current git repository.
@@ -103,7 +103,7 @@ _cmd_install() {
 }
 
 _cmd_update() {
-  git_wrapper pull
+  git_wrapper pull "$repository"
 }
 
 git_clone_wrapper() {
