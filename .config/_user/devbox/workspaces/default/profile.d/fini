@@ -1,7 +1,45 @@
 #!/usr/bin/env bash
 
-case "$-" in
-*i*)
-  _source_dir "${_USER_DEVBOX_WORKSPACE_DIR}/completion.d"
-  ;;
-esac
+# shellcheck disable=SC2154
+_fn() {
+  if [ "${_USER_CONFIG_DEBUG:-}" == 'true' ]; then
+    echo 'DEBUG: fini.'
+  fi
+
+  case "$-" in
+  *i*)
+    _source_scripts_dir "${shell_profile_base_dir}/completion.d"
+
+    declare file
+
+    file="${shell_profile_base_dir}/../utils/prompt-command.sh"
+    if [ -r "$file" ]; then
+      echo  "PROMPT_COMMAND='${PROMPT_COMMAND}'"
+
+      case "$PROMPT_COMMAND" in
+      *"$file"*)
+        ;;
+
+      *";")
+        export PROMPT_COMMAND="${PROMPT_COMMAND}${file}"
+        ;;
+
+      '')
+        export PROMPT_COMMAND="$file"
+        ;;
+
+      *)
+        export PROMPT_COMMAND="${PROMPT_COMMAND};${file}"
+        ;;
+
+      esac
+
+    fi
+    ;;
+  esac
+
+  set +x
+}
+
+_fn
+unset -f _fn

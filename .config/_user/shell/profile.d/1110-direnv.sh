@@ -1,0 +1,1 @@
+../../shared/profile.d/direnv.sh

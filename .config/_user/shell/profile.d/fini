@@ -8,13 +8,29 @@ _fn() {
 
   case "$-" in
   *i*)
-    _source_scripts_dir "${profile_base_dir}/completion.d"
+    _source_scripts_dir "${shell_profile_base_dir}/completion.d"
 
     declare file
 
-    file="${profile_base_dir}/../utils/prompt-command.sh"
-    if [ -x "$file" ] && [ -r "$file" ]; then
-      export PROMPT_COMMAND="source $file"
+    file="${shell_profile_base_dir}/../utils/prompt-command.sh"
+    if [ -r "$file" ]; then
+      #export PROMPT_COMMAND="source $file"
+
+      case "$PROMPT_COMMAND" in
+      *";")
+        export PROMPT_COMMAND="${PROMPT_COMMAND}${file}"
+        ;;
+
+      '')
+        export PROMPT_COMMAND="$file"
+        ;;
+
+      *)
+        export PROMPT_COMMAND="${PROMPT_COMMAND};${file}"
+        ;;
+
+      esac
+
     fi
     ;;
   esac
