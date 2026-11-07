@@ -58,7 +58,7 @@ parse_args() {
 }
 
 show_usage() {
-  sed -e '0,/^#\s*BEGIN:$/d; /^#\s*END:\s*$/,$d; s/^#$//g; s/^#\s/ /g' \
+  sed -e '0,/^#\s*BEGIN:$/d; /^#\s*END:\s*$/,$d; s/^#$//g; s/^#//g' \
     < "$0" | ${PAGER:-cat}
 }
 

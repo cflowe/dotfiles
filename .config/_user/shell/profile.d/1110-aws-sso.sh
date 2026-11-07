@@ -1,0 +1,1 @@
+../../shared/profile.d/aws-sso.sh

@@ -1,0 +1,1 @@
+../../../../shared/completion.d/aws-sso.sh

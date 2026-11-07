@@ -23,8 +23,10 @@
   puhs = push
   pus = push
   ref-sort-commit-time = "!fn(){ env TZ=UTC git for-each-ref --sort=committerdate --format=\"%(committerdate:iso-strict-local) %(refname:short) %(objectname:short)\" \"$@\" | column -t; }; fn \"$@\""
+  root = rev-parse --show-toplevel
   st = status
   sw = switch
+  tag-sort = "!fn(){ git tag | sort -V; }; fn"
 
 [core]
   pager = ''
@@ -41,7 +43,8 @@
   smudge = git-lfs smudge -- %f
 
 [init]
-  defaultBranch = master
+  defaultBranch = main
+  templateDir = ~/.config/_user/templates/git
 
 [pull]
   rebase = false
@@ -62,6 +65,15 @@
 [url "git@bitbucket.org:"]
   insteadOf = bbg:
 
+[url "https://codeberg.org/"]
+  insteadOf = cbh:
+
+[url "git@codeberg.org:cflowe/"]
+  insteadOf = cbf:
+
+[url "git@codeberg.org:"]
+  insteadOf = cbg:
+
 [url "git@github.com:cflowe/"]
   insteadOf = cf:
 
@@ -78,4 +90,5 @@
   command = xz -c
 
 [user]
+  name  = cflowe
   email = 2170524+cflowe@users.noreply.github.com

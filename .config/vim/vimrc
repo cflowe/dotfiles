@@ -63,6 +63,7 @@ set ruler
 set number
 "set relativenumber
 
+set foldlevel=99
 set sw=2
 set softtabstop=2
 set expandtab
