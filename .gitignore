@@ -8,3 +8,6 @@
 !/.config/vim/**
 !/.editorconfig
 !/.gitignore
+!/.ssh
+!/.ssh/**
+!/.sops.yaml
